@@ -35,23 +35,27 @@
     <script>
         // Проверяем, что приложение открыто в Telegram
         if (typeof window.Telegram === 'undefined' || !window.Telegram.WebApp) {
-            // Если приложение открыто вне Telegram, показываем сообщение об ошибке
+            // Если объект Telegram.WebApp недоступен, показываем ошибку
             document.getElementById('app').style.display = 'none';
             document.getElementById('error').style.display = 'block';
         } else {
-            // Если приложение открыто в Telegram, инициализируем WebApp
             const tg = window.Telegram.WebApp;
 
-            // Настраиваем заголовок Mini App
-            tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
-            tg.setBackgroundColor('#f0f0f0'); // Светло-серый фон
+            // Проверяем наличие initData
+            if (!tg.initData) {
+                document.getElementById('app').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+            } else {
+                // Если initData есть, инициализируем приложение
+                tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
+                tg.setBackgroundColor('#f0f0f0'); // Светло-серый фон
 
-            // Кнопка "Press Me" (ничего не делает)
-            const dummyButton = document.getElementById('dummyButton');
-            dummyButton.addEventListener('click', () => {
-                // Можно добавить логику позже, если нужно
-                console.log('Button was pressed, but nothing happens.');
-            });
+                // Кнопка "Press Me" (ничего не делает)
+                const dummyButton = document.getElementById('dummyButton');
+                dummyButton.addEventListener('click', () => {
+                    console.log('Button was pressed, but nothing happens.');
+                });
+            }
         }
     </script>
 </body>
