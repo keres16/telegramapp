@@ -54,38 +54,33 @@
                     const tg = window.Telegram.WebApp; // Получаем объект Telegram Web App
 
                     // Проверяем, что у нас есть данные пользователя
-                if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-                    alert('Error: User data is not available.');
-                    return;
-                }
+                    if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+                        alert('Error: User data is not available.');
+                        return;
+                    }
 
-                const userId = tg.initDataUnsafe.user.id; // ID пользователя
-                const botToken = '1943043335:AAEHWYZT2DjEulIl77KNPQDDAkaflzTJzFE'; // Замените на ваш токен
-                // Если initData есть, инициализируем приложение
-                tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
-                tg.setBackgroundColor('#f0f8ff'); // Светло-серый фон
+                    const userId = tg.initDataUnsafe.user.id; // ID пользователя
+                    const botToken = '1943043335:AAEHWYZT2DjEulIl77KNPQDDAkaflzTJzFE'; // Замените на ваш токен
+                    // Если initData есть, инициализируем приложение
+                    tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
+                    tg.setBackgroundColor('#f0f8ff'); // Светло-серый фон
 
                 try {
                     await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: userId,
-                        text: 'Button was pressed!',
-                    }),
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: userId,
+                            text: 'Button was pressed!',
+                        }),
+                    });
                     alert("message sent")
                 } catch (error) {
                     console.error('Error sending message:', error);
                     alert('Failed to send message.');
                 } 
-                // Кнопка "Press Me" (ничего не делает)
-                
-                dummyButton.addEventListener('click', () => {
-                    console.log('Button was pressed,2 but nothing happens1.');
-                });
             }
         }
     </script>
