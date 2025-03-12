@@ -3,17 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мой Mini App</title>
+  <title>Mini App Test</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      padding: 20px;
       text-align: center;
+      padding: 20px;
     }
     button {
       padding: 10px 20px;
@@ -27,32 +22,32 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Привет, это мой Mini App!</h1>
+  <div id="app">
+    <h1>Привет, это Mini App!</h1>
     <button id="tgButton">Нажми меня</button>
   </div>
 
   <script>
-        // Проверяем, что скрипт запущен внутри Telegram
-    if (window.Telegram.WebApp) {
-    const tg = window.Telegram.WebApp;
+    // Проверяем, что скрипт запущен внутри Telegram
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
 
-    // Показываем кнопку "Закрыть" в интерфейсе Mini App
-    tg.MainButton.show().setText("Закрыть").onClick(() => tg.close());
+      // Инициализация Mini App
+      tg.ready(); // Сообщаем Telegram, что Mini App готов
 
-    // Получаем данные пользователя
-    const user = tg.initDataUnsafe.user;
-    if (user) {
-        console.log("Данные пользователя:", user);
-        document.getElementById("tgButton").innerText = `Привет, ${user.first_name}!`;
-    }
+      // Обработка нажатия на кнопку
+      document.getElementById("tgButton").addEventListener("click", () => {
+        // Пример действия: отправка данных в бота
+        tg.sendData("Кнопка была нажата!");
 
-    // Обработка нажатия на кнопку
-    document.getElementById("tgButton").addEventListener("click", () => {
-        tg.sendData("Данные отправлены в бота!");
-    });
+        // Закрыть Mini App (опционально)
+        tg.close();
+      });
     } else {
-    console.log("Скрипт запущен вне Telegram");
+      console.log("Скрипт запущен вне Telegram");
+      document.getElementById("tgButton").addEventListener("click", () => {
+        alert("Кнопка нажата, но это не Telegram!");
+      });
     }
   </script>
 </body>
