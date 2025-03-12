@@ -28,26 +28,24 @@
   </div>
 
   <script>
-    // Проверяем, что скрипт запущен внутри Telegram
     if (window.Telegram && window.Telegram.WebApp) {
-      const tg = window.Telegram.WebApp;
+        console.log("Telegram WebApp API доступен!");
+        const tg = window.Telegram.WebApp;
 
-      // Инициализация Mini App
-      tg.ready(); // Сообщаем Telegram, что Mini App готов
+        // Инициализация Mini App
+        tg.ready();
 
-      // Обработка нажатия на кнопку
-      document.getElementById("tgButton").addEventListener("click", () => {
-        // Пример действия: отправка данных в бота
-        tg.sendData("Кнопка была нажата!");
-
-        // Закрыть Mini App (опционально)
-        tg.close();
-      });
+        // Обработка нажатия на кнопку
+        document.getElementById("tgButton").addEventListener("click", () => {
+            console.log("Кнопка нажата!");
+            tg.sendData("Кнопка была нажата!");
+            tg.close();
+        });
     } else {
-      console.log("Скрипт запущен вне Telegram");
-      document.getElementById("tgButton").addEventListener("click", () => {
-        alert("Кнопка нажата, но это не Telegram!");
-      });
+        console.log("Скрипт запущен вне Telegram");
+        document.getElementById("tgButton").addEventListener("click", () => {
+            alert("Кнопка нажата, но это не Telegram!");
+        });
     }
   </script>
 </body>
