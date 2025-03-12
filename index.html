@@ -38,6 +38,7 @@
             // Если объект Telegram.WebApp недоступен, показываем ошибку
             document.getElementById('app').style.display = 'none';
             document.getElementById('error').style.display = 'block';
+            console.log('1');
         } else {
             const tg = window.Telegram.WebApp;
 
@@ -45,6 +46,7 @@
             if (!tg.initData) {
                 document.getElementById('app').style.display = 'none';
                 document.getElementById('error').style.display = 'block';
+                console.log('хапузено вне телеграм');
             } else {
                 // Если initData есть, инициализируем приложение
                 tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
