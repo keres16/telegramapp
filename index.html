@@ -1,52 +1,33 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mini App Test</title>
+  <title>Telegram Mini App - Счетчик</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 20px;
+      margin-top: 50px;
     }
     button {
       padding: 10px 20px;
-      font-size: 16px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
+      font-size: 18px;
+      margin: 10px;
       cursor: pointer;
+    }
+    #counter {
+      font-size: 36px;
+      margin: 20px;
     }
   </style>
 </head>
 <body>
-  <div id="app">
-    <h1>Привет, это Mini App!</h1>
-    <button id="tgButton">Нажми меня</button>
-  </div>
+  <h1>Telegram Mini App - Счетчик</h1>
+  <div id="counter">0</div>
+  <button id="increment">+</button>
+  <button id="decrement">-</button>
 
-  <script>
-    if (window.Telegram && window.Telegram.WebApp) {
-        console.log("Telegram WebApp API доступен!");
-        const tg = window.Telegram.WebApp;
-
-        // Инициализация Mini App
-        tg.ready();
-
-        // Обработка нажатия на кнопку
-        document.getElementById("tgButton").addEventListener("click", () => {
-            console.log("Кнопка нажата!");
-            tg.sendData("Кнопка была нажата!");
-            tg.close();
-        });
-    } else {
-        console.log("Скрипт запущен вне Telegram");
-        document.getElementById("tgButton").addEventListener("click", () => {
-            alert("Кнопка нажата, но это не Telegram!");
-        });
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
