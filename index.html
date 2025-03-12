@@ -48,12 +48,12 @@
                 document.getElementById('error').style.display = 'block';
                 console.log('1хапузено вне телеграм');
             } else {
+                const tg = window.Telegram.WebApp; // Получаем объект Telegram Web App
                 tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
                 tg.setBackgroundColor('#d8c2ff'); // Светло-серый фон
                 const dummyButton = document.getElementById('dummyButton');
 
                 dummyButton.addEventListener('click', async () => {
-                    const tg = window.Telegram.WebApp; // Получаем объект Telegram Web App
 
                     // Проверяем, что у нас есть данные пользователя
                     if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
