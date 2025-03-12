@@ -1,33 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Mini App - Счетчик</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin: 10px;
-      cursor: pointer;
-    }
-    #counter {
-      font-size: 36px;
-      margin: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <h1>Telegram Mini App - Счетчик</h1>
-  <div id="counter">0</div>
-  <button id="increment">+</button>
-  <button id="decrement">-</button>
+    <h1>Welcome to the Mini App</h1>
+    <button id="sendButton">Press Me</button>
 
-  <script src="app.js"></script>
+    <script>
+        const sendButton = document.getElementById('sendButton');
+
+        sendButton.addEventListener('click', async () => {
+            const tg = window.Telegram.WebApp; // Получаем объект Telegram Web App
+
+            // Проверяем, что у нас есть данные пользователя
+            if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+                alert('Error: User data is not available.');
+                return;
+            }
+
+            const userId = tg.initDataUnsafe.user.id; // ID пользователя
+            const botToken = '1943043335:AAEHWYZT2DjEulIl77KNPQDDAkaflzTJzFE'; // Замените на ваш токен
+
+            try {
+                // Отправляем сообщение напрямую через Telegram API
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: userId,
+                        text: 'Button was pressed!',
+                    }),
+                });
+
+                alert('Message sent!');
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Failed to send message.');
+            }
+
+            tg.close(); // Закрываем Mini App после отправки
+        });
+    </script>
 </body>
 </html>
