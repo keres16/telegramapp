@@ -65,25 +65,25 @@
                     tg.setHeaderColor('#ffffff'); // Белый цвет заголовка
                     tg.setBackgroundColor('#d8c2ff'); // Светло-серый фон
 
-                try {
-                    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            chat_id: userId,
-                            text: 'Button was pressed!',
-                        }),
-                    });
-                    alert("message sent")
-                } catch (error) {
-                    console.error('Error sending message:', error);
-                    alert('Failed to send message.');
-                } 
-                tg.close();
+                    try {
+                        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                chat_id: userId,
+                                text: 'Button was pressed!',
+                            }),
+                        });
+                        alert("message sent")
+                    } catch (error) {
+                        console.error('Error sending message:', error);
+                        alert('Failed to send message.');
+                    } 
+                    tg.close();
+                });
             }
-        }
     </script>
 </body>
 </html>
