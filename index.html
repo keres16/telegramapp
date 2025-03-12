@@ -1,63 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini App Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to the Mini App</h1>
-    <button id="sendButton">Press Me</button>
+  <div id="app">
+    <h1>Привет, это Mini App!</h1>
+    <button id="tgButton">Нажми меня</button>
+  </div>
 
-    <script>
-        const sendButton = document.getElementById('sendButton');
+  <script>
+    // Проверяем, что скрипт запущен внутри Telegram
+    if (window.Telegram && window.Telegram.WebApp) {
+      console.log("Telegram WebApp API доступен!");
+      const tg = window.Telegram.WebApp;
 
-        sendButton.addEventListener('click', async () => {
-            const tg = window.Telegram.WebApp; // Получаем объект Telegram Web App
+      // Инициализация Mini App
+      tg.ready();
 
-            // Проверяем, что у нас есть данные пользователя
-            if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-                alert('Error: User data is not available.');
-                return;
-            }
+      // Создаем кнопку закрытия
+      tg.MainButton.setText("Закрыть").show();
+      tg.MainButton.onClick(() => {
+        tg.close();
+      });
 
-            const userId = tg.initDataUnsafe.user.id; // ID пользователя
-            const botToken = '1943043335:AAEHWYZT2DjEulIl77KNPQDDAkaflzTJzFE'; // Замените на ваш токен
-
-            try {
-                // Отправляем сообщение напрямую через Telegram API
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: userId,
-                        text: 'Button was pressed!',
-                    }),
-                });
-
-                alert('Message sent!');
-            } catch (error) {
-                console.error('Error sending message:', error);
-                alert('Failed to send message.');
-            }
-
-            tg.close(); // Закрываем Mini App после отправки
-        });
-    </script>
+      // Обработка нажатия на кнопку
+      document.getElementById("tgButton").addEventListener("click", () => {
+        console.log("Кнопка нажата!");
+        tg.sendData("Кнопка была нажата!");
+      });
+    } else {
+      console.log("Скрипт запущен вне Telegram");
+      document.getElementById("tgButton").addEventListener("click", () => {
+        alert("Кнопка нажата, но это не Telegram!");
+      });
+    }
+  </script>
 </body>
 </html>
